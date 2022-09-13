@@ -9,8 +9,8 @@ int generate_polynomial(
         fp_t max_distance_between_clustered_roots, // maximal distance between the closest of the clustered roots
         fp_t root_sweep_low,
         fp_t root_sweep_high, // low and high boundaries of real roots; imaginary parts of complex conjugate roots are in the same range
-        std::vector <fp_t> &roots, // storage where to put the roots; size should exceed P-1
-        std::vector <fp_t> &coefficients) // storage where to put the coefficients; size should exceed P
+        std::vector<fp_t> &roots, // storage where to put the roots; size should exceed P-1
+        std::vector<fp_t> &coefficients) // storage where to put the coefficients; size should exceed P
 {
     int n_simple_roots = P - 2 * N_pairs_of_complex_roots - N_clustered_roots - N_multiple_roots;
     assert(N_clustered_roots != 1);
@@ -21,10 +21,10 @@ int generate_polynomial(
     unsigned long long seed =
             std::chrono::system_clock::now().time_since_epoch().count() + std::rand(); // counts milliseconds
     std::mt19937_64 rng(seed); // randomize seed from the clock
-    std::uniform_real_distribution <fp_t> rnr(root_sweep_low,
-                                              root_sweep_high); // uniform random data generator for single roots
-    std::uniform_real_distribution <fp_t> rnc(static_cast<fp_t>(0.0L),
-                                              max_distance_between_clustered_roots); // uniform random data generator for root clusters
+    std::uniform_real_distribution<fp_t> rnr(root_sweep_low,
+                                             root_sweep_high); // uniform random data generator for single roots
+    std::uniform_real_distribution<fp_t> rnc(static_cast<fp_t>(0.0L),
+                                             max_distance_between_clustered_roots); // uniform random data generator for root clusters
     fp_t re, im, u, v, root_mid_sweep = root_sweep_low + 0.5 * (root_sweep_high - root_sweep_low);
 
     coefficients[P] = static_cast<fp_t>(1.0L); // invariant
@@ -48,8 +48,7 @@ int generate_polynomial(
                 roots[0] = re = rnr(rng);
                 while ((im = rnc(rng)) == static_cast<fp_t>(0.0L)) {}
                 roots[1] = im = (re >= root_mid_sweep ? re - im : re + im);
-            }
-            else if (N_multiple_roots == 2) // double root counted as a single root
+            } else if (N_multiple_roots == 2) // double root counted as a single root
             { roots[1] = roots[0] = im = re = rnr(rng); }
             else // 2 distinct single roots
             {
@@ -93,8 +92,7 @@ int generate_polynomial(
             {
                 roots[1] = roots[0] = im = re = rnr(rng);
                 while ((roots[2] = u = rnr(rng)) == re) {}
-            }
-            else // 3 distinct single roots
+            } else // 3 distinct single roots
             {
                 roots[0] = re = rnr(rng);
                 while ((roots[1] = im = rnr(rng)) == re) {}
@@ -140,8 +138,7 @@ int generate_polynomial(
                     roots[0] = u = rnr(rng);
                     v = rnc(rng);
                     roots[1] = v = (u > root_mid_sweep ? u - v : u + v);
-                }
-                else if (N_multiple_roots == 2) // 2 multiple roots
+                } else if (N_multiple_roots == 2) // 2 multiple roots
                 { roots[1] = roots[0] = u = v = rnr(rng); }
                 else // 2 distinct roots
                 {
@@ -193,14 +190,12 @@ int generate_polynomial(
             {
                 roots[2] = roots[1] = roots[0] = u = im = re = rnr(rng);
                 roots[3] = v = rnr(rng);
-            }
-            else if (N_multiple_roots == 2) // 2 multiple roots and 2 single roots
+            } else if (N_multiple_roots == 2) // 2 multiple roots and 2 single roots
             {
                 roots[1] = roots[0] = im = re = rnr(rng);
                 roots[2] = u = rnr(rng);
                 roots[3] = v = rnr(rng);
-            }
-            else // 4 distinct single roots
+            } else // 4 distinct single roots
             {
                 roots[0] = re = rnr(rng);
                 roots[1] = im = rnr(rng);
@@ -228,8 +223,8 @@ template<typename fp_t>
 int compare_roots(
         unsigned N_roots_to_check, // number of roots in roots_to_check
         unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-        std::vector <fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
-        std::vector <fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
+        std::vector<fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+        std::vector<fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
         fp_t &max_deviation) // here will be placed the greatest among the smallest deviations of the roots in
 // (roots_to_check) and (roots_ground_truth)
 {

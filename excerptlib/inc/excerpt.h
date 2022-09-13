@@ -6,6 +6,7 @@
 #include <cassert>
 #include <iostream>
 #include <iomanip>
+#include <vector>
 
 #ifndef EXCERPT_EXCERPT_H
 #define EXCERPT_EXCERPT_H
@@ -21,8 +22,8 @@ template<typename fp_t>
 int compare_roots(
         unsigned N_roots_to_check, // number of roots in roots_to_check
         unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-        std::vector <fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
-        std::vector <fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
+        std::vector<fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+        std::vector<fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
         fp_t &max_deviation); // here will be placed the greatest among the smallest deviations of the roots in
 // (roots_to_check) and (roots_ground_truth)
 
@@ -40,7 +41,7 @@ int generate_polynomial(
         fp_t max_distance_between_clustered_roots, // maximal distance between the closest of the clustered roots
         fp_t root_sweep_low,
         fp_t root_sweep_high, // low and high boundaries of real roots; imaginary parts of complex conjugate roots are in the same range
-        std::vector <fp_t> &roots, // storage where to put the roots; size should exceed P-1
-        std::vector <fp_t> &coefficients);
+        std::vector<fp_t> &roots, // storage where to put the roots; size should exceed P-1
+        std::vector<fp_t> &coefficients);
 
 #endif //EXCERPT_EXCERPT_H
