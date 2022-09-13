@@ -15,13 +15,14 @@
 #define PR_2_INFINITE_ROOTS          -3
 
 // Compares two vectors of roots; root orderings play no role. For each entry in (roots_ground_truth),
-// the closest entry in (roots_to_check) is found and coresponding distance found. Among such distances
+// the closest entry in (roots_to_check) is found and corresponding distance found. Among such distances
 // the largest will be stored to (max_deviation)
-template<typename fp_t> int compare_roots(
+template<typename fp_t>
+int compare_roots(
         unsigned N_roots_to_check, // number of roots in roots_to_check
         unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-        std::vector<fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
-        std::vector<fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
+        std::vector <fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+        std::vector <fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
         fp_t &max_deviation); // here will be placed the greatest among the smallest deviations of the roots in
 // (roots_to_check) and (roots_ground_truth)
 
@@ -30,14 +31,16 @@ template<typename fp_t> int compare_roots(
 // represented by coefficients, e.g. (coefficients[4]=1)*x^4 + coefficients[3]*x^3 + coefficients[2]*x^2 + coefficients[1]*x + coefficients[0].
 // The highest-degree coefficient always equals 1. The function returns the actual number of different real roots placed into the vector
 // (roots) (complex roots are not placed there). Negative return values may mean internal implementation error
-template<typename fp_t> int generate_polynomial(
+template<typename fp_t>
+int generate_polynomial(
         unsigned P, // polynomial degree
         unsigned N_pairs_of_complex_roots, // how many pairs of complex conjugate roots to introduce
         unsigned N_clustered_roots, // how many clustered roots to introduce; all the clustered roots are real
         unsigned N_multiple_roots, // how many multiple roots to introduce; all multiple roots are real
         fp_t max_distance_between_clustered_roots, // maximal distance between the closest of the clustered roots
-        fp_t root_sweep_low, fp_t root_sweep_high, // low and high boundaries of real roots; imaginary parts of complex conjugate roots are in the same range
-        std::vector<fp_t> &roots, // storage where to put the roots; size should exceed P-1
-        std::vector<fp_t> &coefficients);
+        fp_t root_sweep_low,
+        fp_t root_sweep_high, // low and high boundaries of real roots; imaginary parts of complex conjugate roots are in the same range
+        std::vector <fp_t> &roots, // storage where to put the roots; size should exceed P-1
+        std::vector <fp_t> &coefficients);
 
 #endif //EXCERPT_EXCERPT_H
