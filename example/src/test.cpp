@@ -1,21 +1,19 @@
 #include "excerpt.h"
 #include <vector>
 
-//typedef float fp_t; // floating point type for all the operations
-//typedef double fp_t; // floating point type for all the operations
+using namespace std;
 
 int main() {
-    unsigned int p = 3;
-    std::vector<float> roots(p - 1);
-    std::vector<float> coefficients(p);
-    // TODO: fix c++
-    auto result = generate_polynomial<float>(p, 1, 1, 1, 10.0, -10.0, 10.0, roots, coefficients);
-    std::cout << "Result: " << result << "Roots: ";
+    unsigned p = 2;
+    vector<float> roots(p);
+    vector<float> coefficients(p + 1);
+    auto result = generate_polynomial<float>(p, 0, 2, 0, 10/5, -5, 5.0, roots, coefficients);
+    cout << "Result: " << result << endl << "Roots: ";
     for (auto root: roots) {
-        std::cout << root << " ";
+        cout << root << " ";
     }
-    std::cout << "Coefficients: ";
+    cout << endl << "Coefficients: ";
     for (auto coefficient: coefficients) {
-        std::cout << coefficient << " ";
+        cout << coefficient << " ";
     }
 }

@@ -41,7 +41,7 @@ int generate_polynomial(
                 re = rnr(rng);
                 while ((im = rnr(rng)) == static_cast<fp_t>(0.0L)) {}
                 coefficients[1] = re * static_cast<fp_t>(-2.0L);
-                coefficients[0] = pr_product_difference(re, re, -im, im); // re*re+im*im
+//                coefficients[0] = pr_product_difference(re, re, -im, im); // re*re+im*im
                 return 0;
             } else if (N_clustered_roots == 2) // 2 close but distinct roots
             {
@@ -66,7 +66,7 @@ int generate_polynomial(
                 re = rnr(rng);
                 while ((im = rnr(rng)) == static_cast<fp_t>(0.0L)) {}
                 roots[0] = u = rnr(rng);
-                im = pr_product_difference(re, re, -im, im); // re*re+im*im
+//                im = pr_product_difference(re, re, -im, im); // re*re+im*im
                 re *= static_cast<fp_t>(-2.0L); // irreducible quadratic polynomial is (x^2 + re*x + im); multiply it by (x-u)
                 coefficients[0] = -im * u;
                 coefficients[2] = re - u;
@@ -100,7 +100,7 @@ int generate_polynomial(
             }
             coefficients[2] = -re - im - u;
             coefficients[0] = -re * im * u;
-            v = pr_product_difference(re, im, -re, u);
+//            v = pr_product_difference(re, im, -re, u);
             coefficients[1] = fma(im, u, v); // re*im+re*u+im*u=im*u+(re*im-(-re*u));
             // if (re!=im && im!=u && u!=re) return 3;
             // if (re==im && im==u) return 1;
@@ -246,3 +246,6 @@ int compare_roots(
     max_deviation = deviation_max;
     return rv;
 }
+
+template int generate_polynomial<float>(unsigned P, unsigned N_pairs_of_complex_roots, unsigned N_clustered_roots, unsigned N_multiple_roots, float max_distance_between_clustered_roots, float root_sweep_low, float root_sweep_high, std::vector<float>&roots, std::vector<float>&coefficients);
+

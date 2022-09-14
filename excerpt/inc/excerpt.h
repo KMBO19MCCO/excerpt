@@ -44,4 +44,6 @@ int generate_polynomial(
         std::vector<fp_t> &roots, // storage where to put the roots; size should exceed P-1
         std::vector<fp_t> &coefficients);
 
+
+
 #endif //EXCERPT_EXCERPT_H
