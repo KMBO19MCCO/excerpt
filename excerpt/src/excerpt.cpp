@@ -18,14 +18,16 @@ int generate_polynomial(
     assert(n_simple_roots >= 0 && P <= 4);
     assert(root_sweep_high - root_sweep_low > 2 * P * max_distance_between_clustered_roots);
 
+    std::random_device r;
+
     unsigned long long seed =
-            std::chrono::system_clock::now().time_since_epoch().count() + std::rand(); // counts milliseconds
+            std::chrono::system_clock::now().time_since_epoch().count() + r(); // counts milliseconds
     std::mt19937_64 rng(seed); // randomize seed from the clock
     std::uniform_real_distribution<fp_t> rnr(root_sweep_low,
                                              root_sweep_high); // uniform random data generator for single roots
     std::uniform_real_distribution<fp_t> rnc(static_cast<fp_t>(0.0L),
                                              max_distance_between_clustered_roots); // uniform random data generator for root clusters
-    fp_t re, im, u, v, root_mid_sweep = root_sweep_low + 0.5 * (root_sweep_high - root_sweep_low);
+    fp_t re, im, u, v = rnr(rng), root_mid_sweep = root_sweep_low + 0.5 * (root_sweep_high - root_sweep_low);
 
     coefficients[P] = static_cast<fp_t>(1.0L); // invariant
     switch (P) {
@@ -49,8 +51,9 @@ int generate_polynomial(
                 while ((im = rnc(rng)) == static_cast<fp_t>(0.0L)) {}
                 roots[1] = im = (re >= root_mid_sweep ? re - im : re + im);
             } else if (N_multiple_roots == 2) // double root counted as a single root
-            { roots[1] = roots[0] = im = re = rnr(rng); }
-            else // 2 distinct single roots
+            {
+                roots[1] = roots[0] = im = re = rnr(rng);
+            } else // 2 distinct single roots
             {
                 roots[0] = re = rnr(rng);
                 while ((im = rnr(rng)) == re) {}
@@ -87,8 +90,9 @@ int generate_polynomial(
                 roots[1] = im = (re > root_mid_sweep ? re - im : re + im);
                 do { roots[2] = u = rnr(rng); } while (u == re || u == roots[1]);
             } else if (N_multiple_roots == 3) // triple root counted as a single root
-            { roots[2] = roots[1] = roots[0] = u = im = re = rnr(rng); }
-            else if (N_multiple_roots == 2) // double root and 1 single root; totally 2 roots
+            {
+                roots[2] = roots[1] = roots[0] = u = im = re = rnr(rng);
+            } else if (N_multiple_roots == 2) // double root and 1 single root; totally 2 roots
             {
                 roots[1] = roots[0] = im = re = rnr(rng);
                 while ((roots[2] = u = rnr(rng)) == re) {}
@@ -215,6 +219,8 @@ int generate_polynomial(
             coefficients[3] = re + u;
             return 4;
         } // P=4
+        default:
+            return -1;
     } // switch (P)
     return -1; // unreachable, means a flaw in control here
 }
@@ -247,5 +253,8 @@ int compare_roots(
     return rv;
 }
 
-template int generate_polynomial<float>(unsigned P, unsigned N_pairs_of_complex_roots, unsigned N_clustered_roots, unsigned N_multiple_roots, float max_distance_between_clustered_roots, float root_sweep_low, float root_sweep_high, std::vector<float>&roots, std::vector<float>&coefficients);
+template int generate_polynomial<float>(unsigned P, unsigned N_pairs_of_complex_roots, unsigned N_clustered_roots,
+                                        unsigned N_multiple_roots, float max_distance_between_clustered_roots,
+                                        float root_sweep_low, float root_sweep_high, std::vector<float> &roots,
+                                        std::vector<float> &coefficients);
 

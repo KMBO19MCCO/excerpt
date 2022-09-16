@@ -11,9 +11,9 @@
 #ifndef EXCERPT_EXCERPT_H
 #define EXCERPT_EXCERPT_H
 #define PR_NUMBERS_OF_ROOTS_EQUAL     0
-#define PR_AT_LEAST_ONE_ROOT_LOST    -1
-#define PR_AT_LEAST_ONE_ROOT_IS_FAKE -2
-#define PR_2_INFINITE_ROOTS          -3
+#define PR_AT_LEAST_ONE_ROOT_LOST    (-1)
+#define PR_AT_LEAST_ONE_ROOT_IS_FAKE (-2)
+#define PR_2_INFINITE_ROOTS          (-3)
 
 // Compares two vectors of roots; root orderings play no role. For each entry in (roots_ground_truth),
 // the closest entry in (roots_to_check) is found and corresponding distance found. Among such distances
@@ -28,7 +28,7 @@ int compare_roots(
 // (roots_to_check) and (roots_ground_truth)
 
 
-// Creates a test polynomial, both in the form of roots, e.g. (x-roots[0])*(x-roots[1])*(quadratic polynomial with no real roots) as well as
+// Creates a test polynomial, both in the form of roots, e.g. (x-roots[0])*(x-roots[1])*(quadratic polynomial with no real roots) and
 // represented by coefficients, e.g. (coefficients[4]=1)*x^4 + coefficients[3]*x^3 + coefficients[2]*x^2 + coefficients[1]*x + coefficients[0].
 // The highest-degree coefficient always equals 1. The function returns the actual number of different real roots placed into the vector
 // (roots) (complex roots are not placed there). Negative return values may mean internal implementation error
@@ -43,7 +43,6 @@ int generate_polynomial(
         fp_t root_sweep_high, // low and high boundaries of real roots; imaginary parts of complex conjugate roots are in the same range
         std::vector<fp_t> &roots, // storage where to put the roots; size should exceed P-1
         std::vector<fp_t> &coefficients);
-
 
 
 #endif //EXCERPT_EXCERPT_H
