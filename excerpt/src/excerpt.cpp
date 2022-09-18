@@ -257,4 +257,29 @@ template int generate_polynomial<float>(unsigned P, unsigned N_pairs_of_complex_
                                         unsigned N_multiple_roots, float max_distance_between_clustered_roots,
                                         float root_sweep_low, float root_sweep_high, std::vector<float> &roots,
                                         std::vector<float> &coefficients);
-
+template int generate_polynomial<double>(unsigned P, unsigned N_pairs_of_complex_roots, unsigned N_clustered_roots,
+                                        unsigned N_multiple_roots, double max_distance_between_clustered_roots,
+                                         double root_sweep_low, double root_sweep_high, std::vector<double> &roots,
+                                        std::vector<double> &coefficients);
+template int generate_polynomial<long double>(unsigned P, unsigned N_pairs_of_complex_roots, unsigned N_clustered_roots,
+                                         unsigned N_multiple_roots, long double max_distance_between_clustered_roots,
+                                              long double root_sweep_low, long double root_sweep_high, std::vector<long double> &roots,
+                                         std::vector<long double> &coefficients);
+template int compare_roots<float>(
+        unsigned N_roots_to_check,
+        unsigned N_roots_ground_truth,
+        std::vector<float> &roots_to_check,
+        std::vector<float> &roots_ground_truth,
+        float &max_deviation);
+template int compare_roots<double>(
+        unsigned N_roots_to_check,
+        unsigned N_roots_ground_truth,
+        std::vector<double> &roots_to_check,
+        std::vector<double> &roots_ground_truth,
+        double &max_deviation);
+template int compare_roots<long double>(
+        unsigned N_roots_to_check,
+        unsigned N_roots_ground_truth,
+        std::vector<long double> &roots_to_check,
+        std::vector<long double> &roots_ground_truth,
+        long double &max_deviation);
