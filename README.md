@@ -7,3 +7,5 @@ The highest-degree coefficient always equals
 1. The function returns the actual number of different real roots placed into the vector
 (roots) (complex roots are not placed there). 
 Negative return values may mean internal implementation error
+# WARNING 
+generate_polynomial func returning reversed coefficients
