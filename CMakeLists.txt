@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
-project(excerptTest)
+project(excerpt)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-add_subdirectory(example)
-add_subdirectory(excerpt)
+add_library(excerpt SHARED excerpt.cpp)
