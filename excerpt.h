@@ -7,6 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <complex>
 
 #ifndef EXCERPT_EXCERPT_H
 #define EXCERPT_EXCERPT_H
