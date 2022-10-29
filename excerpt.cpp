@@ -265,7 +265,7 @@ int compare_roots_complex(unsigned N_roots_to_check, // number of roots in roots
             roots_to_check_parsed.push_back(root.real());
         }
     }
-    return compare_roots(roots_to_check_parsed.size(), N_roots_ground_truth, roots_to_check, roots_ground_truth,
+    return compare_roots(roots_to_check_parsed.size(), N_roots_ground_truth, roots_to_check_parsed, roots_ground_truth,
                          max_deviation);
 }
 
