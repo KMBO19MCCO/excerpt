@@ -432,3 +432,9 @@ template int compare_roots_complex<long double>(unsigned N_roots_to_check, // nu
         // will be placed
         // here the greatest relative error among all the roots found will be placed
                                                 long double &max_relative_error);
+
+template float pr_product_difference<float>(float a, float b, float c, float d);
+
+template double pr_product_difference<double>(double a, double b, double c, double d);
+
+template long double pr_product_difference<long double>(long double a, long double b, long double c, long double d);
