@@ -20,6 +20,10 @@
 #include <iomanip>
 #include <complex>
 
+template<typename fp_t>
+fp_t pr_product_difference(fp_t a, fp_t b, fp_t c,
+                           fp_t d); // fms(); computes (a*b - c*d) with precision not worse than 1.5*(unit of the least precision)
+
 // checks attainable number of real roots in a polynomial: a*x^4 + b*x^3 + c*x^2 + d*x + e; multiple root is treated as separate roots
 template<typename fp_t>
 int number_of_roots(unsigned P, // polynomial degree

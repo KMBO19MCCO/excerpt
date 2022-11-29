@@ -11,7 +11,7 @@ unsigned long long N_multiplicative_feedback_fired = 0ULL;
 Nicolas Louvet, and Jean-Michel Muller, "Further Analysis of Kahan's Algorithm for the Accurate Computation of 2x2 Determinants".
 Mathematics of Computation, Vol. 82, No. 284, Oct. 2013, pp. 2245-2264 */
 template<typename fp_t>
-inline fp_t pr_product_difference(fp_t a, fp_t b, fp_t c, fp_t d) {
+fp_t pr_product_difference(fp_t a, fp_t b, fp_t c, fp_t d) {
     auto tmp = d * c;
     return std::fma(a, b, -tmp) + std::fma(-d, c, tmp);
 }
