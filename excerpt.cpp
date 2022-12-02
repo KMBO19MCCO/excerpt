@@ -298,7 +298,10 @@ int compare_roots(
                     deviation < deviation_min_for_this_root ? i_closest_root = i, j_closest_root = j, deviation
                                                             : deviation_min_for_this_root;
         }
-        assert(i_closest_root != -1 and j_closest_root != -1);
+        if (i == -1 or j == -1) {
+            throw std::out_of_range("closest root not found");
+        }
+//        assert(i_closest_root != -1 and j_closest_root != -1);
         auto relative_error_for_this_root = static_cast<fp_t>(2.0L) * deviation_min_for_this_root /
                                             (std::abs(roots_ground_truth[i_closest_root]) +
                                              std::abs(roots_to_check[j_closest_root]));
@@ -348,17 +351,20 @@ int number_of_roots(unsigned P, // polynomial degree
 template<typename fp_t>
 int compare_roots_complex(unsigned N_roots_to_check, // number of roots in roots_to_check
                           unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-                          std::vector<std::complex<fp_t>> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+                          std::vector<std::complex<fp_t>> roots_to_check, // one should take into account only first (N_roots_to_check) rots
                           std::vector<fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
                           fp_t &max_absolute_error, // here the greatest among the smallest deviations of the roots in (roots_to_check) and (roots_ground_truth)
         // will be placed
         // here the greatest relative error among all the roots found will be placed
                           fp_t &max_relative_error) {
     std::vector<fp_t> roots_to_check_parsed;
-    for (auto root: roots_to_check) {
-        if (std::numeric_limits<fp_t>::epsilon() > abs(root.imag())) {
+    for (std::complex<fp_t> root: roots_to_check) {
+        if (std::fpclassify(root.imag()) == FP_ZERO) {
             roots_to_check_parsed.push_back(root.real());
         }
+    }
+    if (roots_to_check_parsed.empty()) {
+        return -1;
     }
     return compare_roots(roots_to_check_parsed.size(), N_roots_ground_truth, roots_to_check_parsed, roots_ground_truth,
                          max_absolute_error, max_relative_error);
@@ -408,7 +414,7 @@ template int compare_roots<long double>(
 
 template int compare_roots_complex<float>(unsigned N_roots_to_check, // number of roots in roots_to_check
                                           unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-                                          std::vector<std::complex<float>> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+                                          std::vector<std::complex<float>> roots_to_check, // one should take into account only first (N_roots_to_check) rots
                                           std::vector<float> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
                                           float &max_absolute_error, // here the greatest among the smallest deviations of the roots in (roots_to_check) and (roots_ground_truth)
         // will be placed
@@ -417,7 +423,7 @@ template int compare_roots_complex<float>(unsigned N_roots_to_check, // number o
 
 template int compare_roots_complex<double>(unsigned N_roots_to_check, // number of roots in roots_to_check
                                            unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-                                           std::vector<std::complex<double>> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+                                           std::vector<std::complex<double>> roots_to_check, // one should take into account only first (N_roots_to_check) rots
                                            std::vector<double> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
                                            double &max_absolute_error, // here the greatest among the smallest deviations of the roots in (roots_to_check) and (roots_ground_truth)
         // will be placed
@@ -426,7 +432,7 @@ template int compare_roots_complex<double>(unsigned N_roots_to_check, // number 
 
 template int compare_roots_complex<long double>(unsigned N_roots_to_check, // number of roots in roots_to_check
                                                 unsigned N_roots_ground_truth,  // number of roots in roots_ground_truth
-                                                std::vector<std::complex<long double>> &roots_to_check, // one should take into account only first (N_roots_to_check) rots
+                                                std::vector<std::complex<long double>> roots_to_check, // one should take into account only first (N_roots_to_check) rots
                                                 std::vector<long double> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) rots
                                                 long double &max_absolute_error, // here the greatest among the smallest deviations of the roots in (roots_to_check) and (roots_ground_truth)
         // will be placed
