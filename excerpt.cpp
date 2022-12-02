@@ -298,7 +298,7 @@ int compare_roots(
                     deviation < deviation_min_for_this_root ? i_closest_root = i, j_closest_root = j, deviation
                                                             : deviation_min_for_this_root;
         }
-        if (i == -1 or j == -1) {
+        if (i_closest_root == -1 or j_closest_root == -1) {
             throw std::out_of_range("closest root not found");
         }
 //        assert(i_closest_root != -1 and j_closest_root != -1);
