@@ -383,7 +383,7 @@ int compare_roots_complex(unsigned N_roots_to_check, // number of roots in roots
                           fp_t &max_relative_error) {
     std::vector<fp_t> roots_to_check_parsed;
     for (std::complex<fp_t> root: roots_to_check) {
-        if (std::fpclassify(root.imag()) == FP_ZERO) {
+        if (abs(root.imag()) < std::numeric_limits<fp_t>::epsilon()) {
             roots_to_check_parsed.push_back(root.real());
         }
     }
