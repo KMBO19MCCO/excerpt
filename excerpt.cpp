@@ -326,7 +326,7 @@ fp_t &max_absolute_error, // here the greatest among the smallest deviations of 
 fp_t &max_relative_error){
     long double abs = std::numeric_limits<long double >::max();
     long double  rel = std::numeric_limits<long double >::max();
-    auto size = roots_to_check.size();
+    auto size = N_roots_to_check;
     for(int j = 0;j<size; j++)
     for(int i = 0;i < size; i++){
         long double  absLoc = std::abs((long double)(roots_ground_truth[i])-(long double)(roots_to_check[(i + j) % size]));
@@ -337,6 +337,7 @@ fp_t &max_relative_error){
     }
     max_absolute_error = abs;
     max_relative_error = rel;
+    return (N_roots_to_check<N_roots_ground_truth) ? PR_AT_LEAST_ONE_ROOT_LOST : ((N_roots_to_check>N_roots_ground_truth) ? PR_AT_LEAST_ONE_ROOT_IS_FAKE : PR_NUMBERS_OF_ROOTS_EQUAL);
 }
 
 
