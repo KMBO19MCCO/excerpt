@@ -326,12 +326,14 @@ fp_t &max_absolute_error, // here the greatest among the smallest deviations of 
 fp_t &max_relative_error){
     long double abs = std::numeric_limits<long double >::max();
     long double  rel = std::numeric_limits<long double >::max();
-    for(int i = 0;i < roots_to_check.size(); i++){
-        long double  absLoc = std::abs((long double)(roots_ground_truth[i])-(long double)(roots_to_check[i]));
+    auto size = roots_to_check.size();
+    for(int j = 0;j<size; j++)
+    for(int i = 0;i < size; i++){
+        long double  absLoc = std::abs((long double)(roots_ground_truth[i])-(long double)(roots_to_check[(i + j) % size]));
         abs = std::min(absLoc,abs);
         rel = std::min(std::abs(
                 (long double)(absLoc + std::numeric_limits<fp_t>::epsilon())/
-                        (long double)(std::max(roots_to_check[i],roots_ground_truth[i]) + std::numeric_limits<fp_t>::epsilon())),rel);
+                        (long double)(std::max(roots_to_check[(i + j) % size],roots_ground_truth[i]) + std::numeric_limits<fp_t>::epsilon())),rel);
     }
     max_absolute_error = abs;
     max_relative_error = rel;
