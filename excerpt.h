@@ -42,6 +42,20 @@ int compare_roots(
         // here the greatest relative error among all the roots found will be placed
         fp_t &max_relative_error);
 
+// Compares two vectors of roots; root orderings play no role. For each entry in (roots_ground_truth),
+// the closest entry in (roots_to_check) is found and corresponding distance found. Among such distances
+// the largest will be stored to (max_deviation)
+template<typename fp_t>
+int compare_roots2(
+        unsigned N_roots_to_check, // number of roots in (roots_to_check)
+        unsigned N_roots_ground_truth,  // number of roots in (roots_ground_truth)
+        std::vector<fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) roots here
+        std::vector<fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) roots here
+        fp_t &max_absolute_error, // here the greatest among the smallest deviations of the roots in (roots_to_check) and (roots_ground_truth)
+        // will be placed
+        // here the greatest relative error among all the roots found will be placed
+        fp_t &max_relative_error);
+
 
 // Creates a test polynomial, both in the form of roots, e.g. (x-roots[0])*(x-roots[1])*(quadratic polynomial with no real roots) and
 // represented by coefficients, e.g. (coefficients[4]=1)*x^4 + coefficients[3]*x^3 + coefficients[2]*x^2 + coefficients[1]*x + coefficients[0].

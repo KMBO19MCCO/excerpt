@@ -315,6 +315,27 @@ int compare_roots(
     max_relative_error = relative_error_max;
     return rv;
 }
+template<typename fp_t>
+int compare_roots2(
+unsigned N_roots_to_check, // number of roots in (roots_to_check)
+unsigned N_roots_ground_truth,  // number of roots in (roots_ground_truth)
+std::vector<fp_t> &roots_to_check, // one should take into account only first (N_roots_to_check) roots here
+std::vector<fp_t> &roots_ground_truth, // one should take into account only first (N_roots_ground_truth) roots here
+fp_t &max_absolute_error, // here the greatest among the smallest deviations of the roots in (roots_to_check) and (roots_ground_truth)
+// will be placed
+fp_t &max_relative_error){
+    long double abs = std::numeric_limits<long double >::max();
+    long double  rel = std::numeric_limits<long double >::max();
+    for(int i = 0;i < roots_to_check.size(); i++){
+        long double  absLoc = std::abs((long double)(roots_ground_truth[i])-(long double)(roots_to_check[i]));
+        abs = std::min(absLoc,abs);
+        rel = std::min(std::abs(
+                (long double)(absLoc + std::numeric_limits<fp_t>::epsilon())/
+                        (long double)(std::max(roots_to_check[i],roots_ground_truth[i]) + std::numeric_limits<fp_t>::epsilon())),rel);
+    }
+    max_absolute_error = abs;
+    max_relative_error = rel;
+}
 
 
 // checks attainable number of real roots in a polynomial: a*x^4 + b*x^3 + c*x^2 + d*x + e; multiple root is treated as separate roots
@@ -404,6 +425,30 @@ template int compare_roots<double>(
         double &max_relative_error);
 
 template int compare_roots<long double>(
+        unsigned N_roots_to_check,
+        unsigned N_roots_ground_truth,
+        std::vector<long double> &roots_to_check,
+        std::vector<long double> &roots_ground_truth,
+        long double &max_absolute_error,
+        long double &max_relative_error);
+
+template int compare_roots2<float>(
+        unsigned N_roots_to_check,
+        unsigned N_roots_ground_truth,
+        std::vector<float> &roots_to_check,
+        std::vector<float> &roots_ground_truth,
+        float &max_absolute_error,
+        float &max_relative_error);
+
+template int compare_roots2<double>(
+        unsigned N_roots_to_check,
+        unsigned N_roots_ground_truth,
+        std::vector<double> &roots_to_check,
+        std::vector<double> &roots_ground_truth,
+        double &max_absolute_error,
+        double &max_relative_error);
+
+template int compare_roots2<long double>(
         unsigned N_roots_to_check,
         unsigned N_roots_ground_truth,
         std::vector<long double> &roots_to_check,
