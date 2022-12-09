@@ -284,6 +284,11 @@ int compare_roots(
         // will be placed
         fp_t &max_relative_error) // here the greatest relative error among all the roots found will be placed
 {
+    for(int i = 0; i< N_roots_to_check; i++){
+        if(std::isnan(roots_to_check[i]))
+            return PR_AT_LEAST_ONE_ROOT_IS_NAN;
+        //Since we can't compare return errors as zero for better compatibility
+    }
     fp_t deviation, absolute_error_max = static_cast<fp_t>(0.0L), relative_error_max = static_cast<fp_t>(0.0L);
     auto rv = (N_roots_to_check < N_roots_ground_truth) ? PR_AT_LEAST_ONE_ROOT_LOST :
               ((N_roots_to_check > N_roots_ground_truth) ? PR_AT_LEAST_ONE_ROOT_IS_FAKE : PR_NUMBERS_OF_ROOTS_EQUAL);
@@ -302,9 +307,12 @@ int compare_roots(
             throw std::out_of_range("closest root not found");
         }
 //        assert(i_closest_root != -1 and j_closest_root != -1);
-        auto relative_error_for_this_root = static_cast<fp_t>(2.0L) * deviation_min_for_this_root /
-                                            (std::abs(roots_ground_truth[i_closest_root]) +
-                                             std::abs(roots_to_check[j_closest_root]));
+        //auto relative_error_for_this_root = static_cast<fp_t>(2.0L) * deviation_min_for_this_root /
+        //                                    (std::abs(roots_ground_truth[i_closest_root]) +
+        //                                     std::abs(roots_to_check[j_closest_root]));
+        auto relative_error_for_this_root = (deviation_min_for_this_root + std::numeric_limits<fp_t>::epsilon()) /
+                                            (std::max(std::abs(roots_ground_truth[i_closest_root]),
+                                             std::abs(roots_to_check[j_closest_root])) + std::numeric_limits<fp_t>::epsilon());
 
         absolute_error_max =
                 deviation_min_for_this_root > absolute_error_max ? deviation_min_for_this_root : absolute_error_max;
