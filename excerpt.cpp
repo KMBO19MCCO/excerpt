@@ -287,7 +287,7 @@ int compare_roots(
     for(int i = 0; i< N_roots_to_check; i++){
         if(std::isnan(roots_to_check[i]))
             return PR_AT_LEAST_ONE_ROOT_IS_NAN;
-        //Since we can't compare return errors as zero for better compatibility
+        //Since we can't compare return errors as is for better compatibility
     }
     fp_t deviation, absolute_error_max = static_cast<fp_t>(0.0L), relative_error_max = static_cast<fp_t>(0.0L);
     auto rv = (N_roots_to_check < N_roots_ground_truth) ? PR_AT_LEAST_ONE_ROOT_LOST :
