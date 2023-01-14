@@ -306,7 +306,7 @@ int compare_roots(
         //std::cout<<"rootsToCheck:"<<N_roots_to_check;
         for (int j = 0; j < N_roots_to_check; ++j) {
             deviation = std::abs(roots_ground_truth[i] - roots_to_check[j]);
-            std::cout<<"dev:"<<deviation;
+            //std::cout<<"dev:"<<deviation;
             deviation_min_for_this_root =
                     deviation < deviation_min_for_this_root ? i_closest_root = i, j_closest_root = j, deviation
                                                             : deviation_min_for_this_root;
